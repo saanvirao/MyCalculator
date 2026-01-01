@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Gemini Math Wizard",
+  "description": "A sophisticated calculator with built-in AI for explaining complex mathematical concepts and solving word problems using Gemini 3 Flash.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
