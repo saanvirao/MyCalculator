@@ -1,10 +1,8 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIExplanation } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-
 export const getMathExplanation = async (expression: string, result: string): Promise<AIExplanation> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -33,7 +31,9 @@ export const getMathExplanation = async (expression: string, result: string): Pr
       }
     });
 
-    return JSON.parse(response.text);
+    const text = response.text;
+    if (!text) throw new Error("No response text received from Gemini.");
+    return JSON.parse(text);
   } catch (error) {
     console.error("Gemini API Error:", error);
     throw new Error("Failed to fetch AI explanation");
@@ -41,6 +41,7 @@ export const getMathExplanation = async (expression: string, result: string): Pr
 };
 
 export const solveWordProblem = async (problem: string): Promise<string> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -49,7 +50,7 @@ export const solveWordProblem = async (problem: string): Promise<string> => {
         systemInstruction: "You are a helpful math assistant. Focus on accuracy and clarity."
       }
     });
-    return response.text;
+    return response.text || "No solution generated.";
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "Sorry, I couldn't solve that problem.";
