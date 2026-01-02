@@ -1,8 +1,7 @@
-
 {
   "name": "Gemini Math Wizard",
   "short_name": "Saanvi Calc",
-  "start_url": ".",
+  "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
